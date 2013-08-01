@@ -1,0 +1,13 @@
+{
+    "name": "sirian/symfony2-form-bundle",
+    "type": "library",
+    "description": "symfony2 extra form types",
+    "keywords": [],
+    "autoload": {
+        "psr-0": { "Sirian\\FormBundle\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/symfony": ">=2.3.0"
+    }
+}
