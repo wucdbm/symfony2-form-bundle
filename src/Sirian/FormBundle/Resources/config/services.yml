@@ -1,0 +1,18 @@
+parameters:
+
+services:
+    sirian_form.suggest_registry:
+        class: Sirian\FormBundle\Suggest\Registry
+        arguments: [@service_container]
+
+    sirian_form.suggest_form_type:
+        class: Sirian\FormBundle\Form\Type\SuggestType
+        arguments: [@sirian_form.suggest_registry]
+        tags:
+            - { name: form.type, alias: suggest }
+
+    sirian_form.doctrine_suggester:
+        class: Sirian\FormBundle\Suggest\DoctrineSuggester
+        abstract: true
+        calls:
+            - [setDoctrine, [@doctrine]]

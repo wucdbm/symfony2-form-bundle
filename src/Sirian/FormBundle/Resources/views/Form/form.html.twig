@@ -1,0 +1,55 @@
+{% block suggest_widget %}
+    {% if multiple %}
+
+    {% else %}
+        <input id="hidden_{{ id }}" type="hidden" name="{{ full_name }}" {% if value %}value="{{ value.id }}"{% endif %} />
+        {% set original_full_name = full_name %}
+        {% set full_name = '' %}
+        <input type="text" data-name="{{ original_full_name }}" {{ block('widget_attributes') }} {% if value %}value="{{ value.text }}"{% endif %}>
+        {% set full_name = original_full_name %}
+    {% endif %}
+    {{ block('suggest_widget_javascript') }}
+{% endblock %}
+
+{% block suggest_widget_javascript %}
+    <script type="text/javascript">
+        (function () {
+            var $input = $('#{{ id }}');
+            var $hidden = $('#hidden_{{ id }}');
+
+            var options = {
+                width: $input.outerWidth() + 'px',
+                allowClear: !$input.prop('required'),
+                placeholder: 'Search',
+                multiple: {{ multiple ? 1 : 0 }},
+                ajax: {
+                    url: '{{ path('sirian_form_suggest', {name: suggester}) }}',
+                    dataType: 'json',
+                    data: function (term, page) {
+                        return {
+                            query: term,
+                            o: {
+                                page: page
+                            }
+                        }
+                    },
+                    results: function (data, page) {
+                        return {
+                            results: data.items,
+                            more: data.hasMore
+                        }
+                    }
+                },
+                initSelection: function (element, callback) {
+                    callback({{ (multiple ? choices : choices[0])|json_encode|raw }})
+                }
+            };
+
+            {{ javascriptInjection|default('')|raw }}
+
+            $input.attr('name', $input.attr('data-name')).val($hidden.val());
+            $hidden.remove();
+            $input.select2(options);
+        }());
+    </script>
+{% endblock %}

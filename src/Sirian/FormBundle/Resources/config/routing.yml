@@ -1,0 +1,3 @@
+sirian_form_suggest:
+    path: /{name}
+    defaults: { _controller: SirianFormBundle:Suggest:suggest }
