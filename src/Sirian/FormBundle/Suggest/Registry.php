@@ -46,6 +46,6 @@ class Registry
             return $this->suggesters[$name];
         }
 
-        throw new \InvalidArgumentException(sprintf('Suggester "%" not registered', $name));
+        throw new \InvalidArgumentException(sprintf('Suggester "%s" not registered', $name));
     }
 }
