@@ -25,8 +25,10 @@ class SirianFormExtension extends Extension
                 ->addArgument($suggest['entity'])
                 ->addArgument($suggest['manager'])
                 ->addArgument($suggest['search'])
-                ->addArgument($suggest['idPath'])
-                ->addArgument($suggest['textPath'])
+                ->addArgument($suggest['paths'] ?: [
+                    'id' => 'id',
+                    'text' => 'name'
+                ])
                 ->addTag('sirian_form.suggester', [
                     'alias' => $key
                 ])

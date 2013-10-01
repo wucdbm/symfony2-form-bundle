@@ -9,16 +9,14 @@ class BaseDoctrineSuggester extends \Sirian\FormBundle\Suggest\DoctrineSuggester
     protected $repositoryName;
     protected $managerName;
     protected $searchFields = [];
-    protected $idPath;
-    protected $textPath;
+    protected $paths = [];
 
-    public function __construct($repositoryName, $managerName = null, $searchFields = ['name'], $idPath = 'id', $textPath = 'name')
+    public function __construct($repositoryName, $managerName = null, $searchFields = ['name'], $paths = array())
     {
         $this->repositoryName = $repositoryName;
         $this->managerName = $managerName;
         $this->searchFields = $searchFields;
-        $this->idPath = $idPath;
-        $this->textPath = $textPath;
+        $this->paths = $paths;
     }
 
     public function getRepository()
@@ -35,11 +33,12 @@ class BaseDoctrineSuggester extends \Sirian\FormBundle\Suggest\DoctrineSuggester
     {
         $propertyAccessor = new PropertyAccessor();
 
-        return array_map(function($campaign) use ($propertyAccessor) {
-            return [
-                'id' => $propertyAccessor->getValue($campaign, $this->idPath),
-                'text' => $propertyAccessor->getValue($campaign, $this->textPath)
-            ];
+        return array_map(function($entity) use ($propertyAccessor) {
+            $data = [];
+            foreach ($this->paths as $key => $path) {
+                $data[$key] = $propertyAccessor->getValue($entity, $path);
+            }
+            return $data;
         }, $items);
     }
 }

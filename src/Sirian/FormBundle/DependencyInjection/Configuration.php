@@ -19,6 +19,8 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                     ->children()
                         ->scalarNode('entity')->isRequired()->end()
+                        ->scalarNode('manager')->defaultNull()->end()
+                        ->scalarNode('alias')->end()
                         ->arrayNode('search')
                             ->beforeNormalization()
                                 ->ifTrue(function($v) { return !is_array($v) && !is_null($v); })
@@ -27,10 +29,8 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')
                             ->end()
                         ->end()
-                        ->scalarNode('idPath')->defaultValue('id')->end()
-                        ->scalarNode('textPath')->defaultValue('name')->end()
-                        ->scalarNode('manager')->defaultNull()->end()
-                        ->scalarNode('alias')->end()
+                        ->arrayNode('paths')
+                            ->prototype('scalar')
         ;
 
 
