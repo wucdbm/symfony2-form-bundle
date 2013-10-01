@@ -16,3 +16,8 @@ services:
         abstract: true
         calls:
             - [setDoctrine, [@doctrine]]
+
+    sirian_form.base_doctrine_suggester:
+        class: Sirian\FormBundle\Suggest\BaseDoctrineSuggester
+        parent: sirian_form.doctrine_suggester
+        abstract: true
