@@ -1,13 +1,10 @@
 {% block suggest_widget %}
-    {% if multiple %}
+    <input id="hidden_{{ id }}" type="hidden" name="{{ full_name }}" value="{{ ids|join(',') }}" />
+    {% set original_full_name = full_name %}
+    {% set full_name = '' %}
+    <input type="text" data-name="{{ original_full_name }}" {{ block('widget_attributes') }} value="{{ texts|join(', ') }}">
+    {% set full_name = original_full_name %}
 
-    {% else %}
-        <input id="hidden_{{ id }}" type="hidden" name="{{ full_name }}" {% if value %}value="{{ value.id }}"{% endif %} />
-        {% set original_full_name = full_name %}
-        {% set full_name = '' %}
-        <input type="text" data-name="{{ original_full_name }}" {{ block('widget_attributes') }} {% if value %}value="{{ value.text }}"{% endif %}>
-        {% set full_name = original_full_name %}
-    {% endif %}
     {{ block('suggest_widget_javascript') }}
 {% endblock %}
 

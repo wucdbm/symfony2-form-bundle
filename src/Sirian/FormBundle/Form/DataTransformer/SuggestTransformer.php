@@ -41,13 +41,8 @@ class SuggestTransformer implements DataTransformerInterface
         if (null === $id) {
             return $this->multiple ? [] : null;
         }
-        if ($this->multiple !== is_array($id)) {
-            throw new TransformationFailedException();
-        }
 
-        if (!$this->multiple) {
-            $id = [$id];
-        }
+        $id = explode(',', $id);
 
         $result = $this->suggester->reverseTransform($id);;
         return $this->multiple ? $result : ($result ? $result[0] : null);

@@ -43,6 +43,15 @@ class SuggestType extends AbstractType
             'choices' => $options['multiple'] ? $view->vars['value'] : [$view->vars['value']],
             'suggester' => $options['suggester']
         ]);
+
+        $view->vars = array_replace($view->vars, [
+            'ids' => array_map(function ($choice) {
+                return $choice['id'];
+            }, $view->vars['choices']),
+            'texts' => array_map(function ($choice) {
+                return $choice['text'];
+            }, $view->vars['choices']),
+        ]);
     }
 
 
