@@ -17,7 +17,7 @@
             var options = {
                 width: $input.outerWidth() + 'px',
                 allowClear: !$input.prop('required'),
-                placeholder: 'Search',
+                placeholder: '{{ attr.placeholder|default('Search') }}',
                 multiple: {{ multiple ? 1 : 0 }},
                 ajax: {
                     url: '{{ path('sirian_form_suggest', {name: suggester}) }}',
