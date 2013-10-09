@@ -18,7 +18,6 @@ class SirianFormExtension extends Extension
         $loader->load('services.yml');
 
         foreach ($config['suggest'] as $key => $suggest) {
-
             $definition = new DefinitionDecorator('sirian_form.base_doctrine_suggester');
 
             $definition
@@ -29,6 +28,7 @@ class SirianFormExtension extends Extension
                     'id' => 'id',
                     'text' => 'name'
                 ])
+                ->addArgument($suggest['order'])
                 ->addTag('sirian_form.suggester', [
                     'alias' => $key
                 ])

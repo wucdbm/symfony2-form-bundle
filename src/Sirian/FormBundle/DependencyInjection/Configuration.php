@@ -29,6 +29,10 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')
                             ->end()
                         ->end()
+                        ->arrayNode('order')
+                            ->prototype('scalar')
+                            ->end()
+                        ->end()
                         ->arrayNode('paths')
                             ->prototype('scalar')
         ;

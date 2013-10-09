@@ -10,13 +10,15 @@ class BaseDoctrineSuggester extends \Sirian\FormBundle\Suggest\DoctrineSuggester
     protected $managerName;
     protected $searchFields = [];
     protected $paths = [];
+    protected $order = [];
 
-    public function __construct($repositoryName, $managerName = null, $searchFields = ['name'], $paths = array())
+    public function __construct($repositoryName, $managerName = null, $searchFields = ['name'], $paths = array(), $order = [])
     {
         $this->repositoryName = $repositoryName;
         $this->managerName = $managerName;
         $this->searchFields = $searchFields;
         $this->paths = $paths;
+        $this->order = $order;
     }
 
     public function getRepository()
@@ -26,7 +28,7 @@ class BaseDoctrineSuggester extends \Sirian\FormBundle\Suggest\DoctrineSuggester
 
     public function suggest($query, $options = [])
     {
-        return $this->suggestByFields($this->searchFields, $query, $options);
+        return $this->suggestByFields($this->searchFields, $query, $options, $this->order);
     }
 
     public function transform($items)

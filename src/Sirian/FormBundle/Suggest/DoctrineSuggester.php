@@ -19,18 +19,18 @@ abstract class DoctrineSuggester extends AbstractSuggester
         $this->doctrine = $doctrine;
     }
 
-    public function suggestByFields(array $fields, $query = '', $options = [])
+    public function suggestByFields(array $fields, $query = '', $options = [], $order = [])
     {
         $qb = $this->getQueryBuilder();
         if (isset($options['page']) && $qb->getMaxResults()) {
             $qb->setFirstResult(($options['page'] - 1) * $qb->getMaxResults());
         }
-        $this->buildSuggestByFields($qb, $fields, $query);
+        $this->buildSuggestByFields($qb, $fields, $query, $order);
 
         return $this->createResult($qb);
     }
 
-    public function buildSuggestByFields(QueryBuilder $qb, array $fields, $query)
+    public function buildSuggestByFields(QueryBuilder $qb, array $fields, $query, $order)
     {
         $alias = current($qb->getRootAliases());
 
@@ -47,6 +47,9 @@ abstract class DoctrineSuggester extends AbstractSuggester
             if ($likes->count()) {
                 $qb->andWhere($likes);
             }
+        }
+        foreach ($order as $field => $direction) {
+            $qb->addOrderBy($alias . '.' . $field, $direction);
         }
         return $qb;
     }
