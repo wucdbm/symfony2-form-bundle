@@ -1,10 +1,15 @@
 {% block suggest_widget %}
+
     <input id="hidden_{{ id }}" type="hidden" name="{{ full_name }}" value="{{ ids|join(',') }}" />
     {% set original_full_name = full_name %}
     {% set full_name = '' %}
     <input type="text" data-name="{{ original_full_name }}" {{ block('widget_attributes') }} value="{{ texts|join(', ') }}">
     {% set full_name = original_full_name %}
 
+    {{ block(suggester ~ '_suggest_widget')|default(block('default_suggest_widget'))|raw }}
+{% endblock %}
+
+{% block default_suggest_widget %}
     {{ block('suggest_widget_javascript') }}
 {% endblock %}
 
