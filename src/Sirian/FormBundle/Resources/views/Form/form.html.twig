@@ -15,7 +15,8 @@
 
 {% block suggest_widget_javascript %}
     <script type="text/javascript">
-        (function () {
+        (function ($) {
+            var firstInit = true;
             var $input = $('#{{ id }}');
             var $hidden = $('#hidden_{{ id }}');
 
@@ -24,6 +25,7 @@
                 allowClear: !$input.prop('required'),
                 placeholder: '{{ attr.placeholder|default('Search') }}',
                 multiple: {{ multiple ? 1 : 0 }},
+                closeOnSelect: false,
                 ajax: {
                     url: '{{ path('sirian_form_suggest', {name: suggester}) }}',
                     dataType: 'json',
@@ -43,7 +45,22 @@
                     }
                 },
                 initSelection: function (element, callback) {
-                    callback({{ (multiple ? choices : choices[0])|json_encode|raw }})
+                    if (firstInit) {
+                        callback({{ (multiple ? choices : choices[0])|json_encode|raw }});
+                        firstInit = false;
+                        return;
+                    }
+
+                    $.ajax({
+                        url: '{{ path('sirian_form_suggest_init', {name: suggester}) }}',
+                        data: {
+                            ids: element.val()
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            callback(data)
+                        }
+                    });
                 }
             };
 
@@ -52,6 +69,6 @@
             $input.attr('name', $input.attr('data-name')).val($hidden.val());
             $hidden.remove();
             $input.select2(options);
-        }());
+        }(jQuery));
     </script>
 {% endblock %}

@@ -1,3 +1,8 @@
+sirian_form_suggest_init:
+    path: /{name}/init
+    defaults: { _controller: SirianFormBundle:Suggest:init }
+
 sirian_form_suggest:
     path: /{name}
     defaults: { _controller: SirianFormBundle:Suggest:suggest }
+
