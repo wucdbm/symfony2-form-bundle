@@ -97,8 +97,10 @@ abstract class DoctrineSuggester extends AbstractSuggester
 
     protected function getEntitiesByIds($field, $ids)
     {
-        $qb = $this->getQueryBuilder();
-
+        $qb = $this
+            ->getQueryBuilder()
+            ->setMaxResults(count($ids))
+        ;
         $alias = current($qb->getRootAliases());
 
         $parameter = 'suggest_' . $field;

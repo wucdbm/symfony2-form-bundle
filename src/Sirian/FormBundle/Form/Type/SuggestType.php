@@ -30,7 +30,8 @@ class SuggestType extends AbstractType
     {
         $resolver->setDefaults([
             'multiple' => false,
-            'compound' => false
+            'compound' => false,
+            'select2_options' => []
         ]);
 
         $resolver->setRequired(['suggester']);
