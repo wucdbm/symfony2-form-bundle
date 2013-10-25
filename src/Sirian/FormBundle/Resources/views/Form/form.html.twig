@@ -20,7 +20,7 @@
             var $input = $('#{{ id }}');
             var $hidden = $('#hidden_{{ id }}');
 
-            var options = {
+            var options = $.extend({
                 width: $input.outerWidth() + 'px',
                 allowClear: !$input.prop('required'),
                 placeholder: '{{ attr.placeholder|default('Search') }}',
@@ -61,7 +61,7 @@
                         }
                     });
                 }
-            };
+            }, {{ js_options|json_encode|raw }});
 
             {{ javascriptInjection|default('')|raw }}
 

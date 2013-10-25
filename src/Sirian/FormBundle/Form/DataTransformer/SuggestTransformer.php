@@ -42,9 +42,13 @@ class SuggestTransformer implements DataTransformerInterface
             return $this->multiple ? [] : null;
         }
 
-        $id = explode(',', $id);
+        $id = array_values(array_filter(explode(',', $id)));
 
-        $result = $this->suggester->reverseTransform($id);;
+        if ($id) {
+            $result = $this->suggester->reverseTransform($id);;
+        } else {
+            $result = [];
+        }
         return $this->multiple ? $result : ($result ? $result[0] : null);
     }
 }

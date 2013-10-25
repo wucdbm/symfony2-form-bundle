@@ -31,7 +31,7 @@ class SuggestType extends AbstractType
         $resolver->setDefaults([
             'multiple' => false,
             'compound' => false,
-            'select2_options' => []
+            'js_options' => []
         ]);
 
         $resolver->setRequired(['suggester']);
@@ -42,7 +42,8 @@ class SuggestType extends AbstractType
         $view->vars = array_replace($view->vars, [
             'multiple' => $options['multiple'],
             'choices' => $options['multiple'] ? $view->vars['value'] : [$view->vars['value']],
-            'suggester' => $options['suggester']
+            'suggester' => $options['suggester'],
+            'js_options' => $options['js_options']
         ]);
 
         $view->vars = array_replace($view->vars, [
