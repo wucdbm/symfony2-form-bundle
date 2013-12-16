@@ -1,5 +1,5 @@
 {
-    "name": "sirian/symfony-form-bundle",
+    "name": "sirian/symfony2-form-bundle",
     "type": "library",
     "description": "symfony2 extra form types",
     "keywords": [],
